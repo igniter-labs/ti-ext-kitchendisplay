@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorName\Skelenton;
+namespace Igniterlabs\Skelenton;
 
 class Extension extends \Igniter\System\Classes\BaseExtension
 {

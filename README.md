@@ -1,55 +1,42 @@
-:package_description
+<p align="center">
+    <a href="https://github.com/igniter-labs/ti-ext-kitchendisplay/actions"><img src="https://github.com/igniter-labs/ti-ext-kitchendisplay/actions/workflows/pipeline.yml/badge.svg" alt="Build Status"></a>
+    <a href="https://packagist.org/packages/igniterlabs/ti-ext-kitchendisplay"><img src="https://img.shields.io/packagist/dt/igniterlabs/ti-ext-kitchendisplay" alt="Total Downloads"></a>
+    <a href="https://packagist.org/packages/igniterlabs/ti-ext-kitchendisplay"><img src="https://img.shields.io/packagist/v/igniterlabs/ti-ext-kitchendisplay" alt="Latest Stable Version"></a>
+    <a href="https://packagist.org/packages/igniterlabs/ti-ext-kitchendisplay"><img src="https://img.shields.io/packagist/l/igniterlabs/ti-ext-kitchendisplay" alt="License"></a>
+</p>
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-[![Tests](https://github.com/:vendor_slug/:package_slug/actions/workflows/run-tests.yml/badge.svg?branch=main)](https://github.com/:vendor_slug/:package_slug/actions/workflows/run-tests.yml)
-[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-<!--delete-->
----
-This package can be used as to scaffold a TastyIgniter extension. Follow these steps to get started:
+## Introduction
 
-- Press the `Use template` button at the top of this repo to create a new repo with the contents of this skeleton
-- Run `php ./configure.php` to run a script that will replace all placeholders throughout all the files
-- Have fun creating your extension.
+The TastyIgniter Kitchen Display extension provides a digital solution for managing and displaying orders in a restaurant kitchen. This extension allows kitchen staff to view, organize, and update order statuses in real-time, improving communication and efficiency in the kitchen.
 
-Inspired by [Spatie's PHP Package Skeleton](https://github.com/spatie/package-skeleton-php)
----
-<!--/delete-->
-This is where your description should go. Try and limit it to a paragraph or two. Consider adding a small example.
-
-### Installation
+## Installation
 
 You can install the extension via composer:
 
 ```bash
-composer require :vendor_slug/:package_slug
+composer require igniterlabs/ti-ext-kitchendisplay
 ```
 
-### Usage
+## Documentation
 
-### Testing
+More documentation can be found on [here](https://github.com/igniter-labs/ti-ext-reports/blob/master/docs/index.md).
 
-```bash
-composer test
-```
+## Changelog
 
-### Contributing
+Please see [CHANGELOG](https://github.com/igniter-labs/ti-ext-reports/blob/master/CHANGELOG.md) for more information on what has changed recently.
 
-Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
+## Reporting issues
 
-### Code of Conduct
+If you encounter a bug in this extension, please report it using the [Issue Tracker](https://github.com/igniter-labs/ti-ext-reports/issues) on GitHub.
 
-In order to ensure that the [TastyIgniter community](https://forum.tastyigniter.com) is welcoming to all, please review
-and abide by the [Code of Conduct](https://tastyigniter.com/docs/code-of-conduct).
+## Contributing
 
-### Security Vulnerabilities
+Contributions are welcome! Please read [TastyIgniter's contributing guide](https://tastyigniter.com/docs/resources/contribution-guide).
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+## Security vulnerabilities
 
-### Credits
+For reporting security vulnerabilities, please see [our security policy](https://github.com/igniter-labs/ti-ext-reports/security/policy).
 
-- [:author_name](https://github.com/:author_username)
-- [All Contributors](../../contributors)
+## License
 
-### License
-
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+TastyIgniter Reports extension is open-source software licensed under the [MIT license](https://github.com/igniter-labs/ti-ext-reports/blob/master/LICENSE.md).
