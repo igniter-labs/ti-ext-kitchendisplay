@@ -19,8 +19,6 @@ return new class extends Migration {
             $table->json('menu_categories')->nullable();
             $table->unsignedInteger('refresh_interval')->default(30);
             $table->unsignedInteger('orders_limit')->default(20);
-            $table->boolean('users_assigned_only')->default(false);
-            $table->json('users_assigned')->nullable();
             $table->json('display_design')->nullable(); // JSON structure for display settings
             $table->boolean('is_enabled')->default(true);
             $table->timestamps();

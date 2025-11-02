@@ -5,12 +5,10 @@ return [
     'label_locations' => 'Locations',
     'label_order_status' => 'Order Status',
     'label_order_types' => 'Order Types',
-    'label_users_assigned' => 'Users Assigned',
     'label_menu_categories' => 'Menu Categories',
     'label_status' => 'Status',
     'label_refresh_interval' => 'Refresh Interval (seconds)',
     'label_orders_limit' => 'Orders Limit',
-    'label_users_assigned_only' => 'Show orders assigned to the user only',
 
     'column_title' => 'Title',
     'column_status' => 'Status',

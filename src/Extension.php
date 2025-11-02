@@ -3,6 +3,7 @@
 namespace IgniterLabs\KitchenDisplay;
 
 use Igniter\System\Classes\BaseExtension;
+use IgniterLabs\KitchenDisplay\Events\KitchenDisplayUpdated;
 use Override;
 
 class Extension extends BaseExtension
@@ -32,7 +33,7 @@ class Extension extends BaseExtension
     public function registerNavigation(): array
     {
         return [
-            'restaurant' => [
+            'tools' => [
                 'child' => [
                     'kitchendisplay' => [
                         'priority' => 350,
@@ -46,5 +47,10 @@ class Extension extends BaseExtension
         ];
     }
 
-
+    public function registerEventBroadcasts(): array
+    {
+        return [
+            'igniter.cart.orderStatusAdded' => KitchenDisplayUpdated::class
+        ];
+    }
 }

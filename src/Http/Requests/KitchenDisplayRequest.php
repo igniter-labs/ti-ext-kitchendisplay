@@ -17,8 +17,6 @@ class KitchenDisplayRequest extends FormRequest
             'is_enabled' => 'lang:igniterlabs.kitchendisplay::default.label_status',
             'refresh_interval' => 'lang:igniterlabs.kitchendisplay::default.label_refresh_interval',
             'orders_limit' => 'lang:igniterlabs.kitchendisplay::default.label_orders_limit',
-            'users_assigned_only' => 'lang:igniterlabs.kitchendisplay::default.label_user_assigned_only',
-            'users_assigned' => 'lang:igniterlabs.kitchendisplay::default.label_users_assigned',
         ];
     }
 
@@ -30,11 +28,9 @@ class KitchenDisplayRequest extends FormRequest
             'order_statuses' => ['nullable', 'array'],
             'order_types' => ['nullable', 'array'],
             'menu_categories' => ['nullable', 'array'],
-            'users_assigned' => ['nullable', 'array'],
             'is_enabled' => ['boolean'],
             'refresh_interval' => ['required', 'integer', 'min:5'],
             'orders_limit' => ['required', 'integer', 'min:1', 'max:100'],
-            'users_assigned_only' => ['boolean'],
         ];
     }
 }

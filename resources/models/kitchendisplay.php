@@ -139,25 +139,6 @@ return [
                     'step' => 1,
                 ],
             ],
-            'users_assigned_only' => [
-                'label' => 'lang:igniterlabs.kitchendisplay::default.label_users_assigned_only',
-                'comment' => 'lang:igniterlabs.kitchendisplay::default.help_users_assigned_only',
-                'type' => 'switch',
-                'span' => 'left',
-                'default' => false,
-            ],
-            'users_assigned' => [
-                'label' => 'lang:igniterlabs.kitchendisplay::default.label_users_assigned',
-                'comment' => 'lang:igniterlabs.kitchendisplay::default.help_users_assigned',
-                'type' => 'selectlist',
-                'span' => 'right',
-                'options' => [\Igniter\User\Models\User::class, 'getDropdownOptions'],
-                'trigger' => [
-                    'action' => 'hide',
-                    'field' => 'users_assigned_only',
-                    'condition' => 'checked',
-                ]
-            ],
         ]
     ]
 ];
