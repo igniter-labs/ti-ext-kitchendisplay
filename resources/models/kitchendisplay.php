@@ -2,6 +2,7 @@
 
 use Igniter\Admin\Models\Status;
 use Igniter\Cart\Models\Concerns\LocationAction;
+use IgniterLabs\KitchenDisplay\Models\KitchenDisplay;
 
 return [
     'list' => [
@@ -10,7 +11,7 @@ return [
                 'create' => [
                     'label' => 'lang:igniter::admin.button_new',
                     'class' => 'btn btn-primary',
-                    'href' => 'kitchen_display/create',
+                    'href' => 'igniterlabs/kitchendisplay/kitchen_display/create',
                 ],
             ],
         ],
@@ -28,7 +29,7 @@ return [
                 'iconCssClass' => 'fa fa-pencil',
                 'attributes' => [
                     'class' => 'btn btn-edit',
-                    'href' => 'kitchen_display/edit/{id}',
+                    'href' => 'igniterlabs/kitchendisplay/kitchen_display/edit/{id}',
                 ],
             ],
             'title' => [
@@ -36,7 +37,8 @@ return [
                 'type' => 'text',
                 'sortable' => true,
                 'formatter' => function ($record, $column, $value) {
-                    return sprintf('<strong><a href="%s">%s</a></strong>', admin_url('kitchen_display/view/' . $record->id), e($value));
+                    return sprintf('<strong><a href="%s">%s</a></strong>',
+                        admin_url('igniterlabs/kitchendisplay/kitchen_display/view/' . $record->id), e($value));
                 },
             ],
             'is_enabled' => [
@@ -78,67 +80,162 @@ return [
                 ],
             ],
         ],
-        'fields' => [
-            'title' => [
-                'label' => 'lang:igniterlabs.kitchendisplay::default.label_title',
-                'type' => 'text',
-                'span' => 'left',
-            ],
-            'locations' => [
-                'label' => 'lang:igniterlabs.kitchendisplay::default.label_locations',
-                'comment' => 'lang:igniterlabs.kitchendisplay::default.help_locations',
-                'type' => 'selectlist',
-                'span' => 'right',
-                'options' => [\Igniter\Local\Models\Location::class, 'getDropdownOptions'],
-            ],
-            'order_statuses' => [
-                'label' => 'lang:igniterlabs.kitchendisplay::default.label_order_status',
-                'comment' => 'lang:igniterlabs.kitchendisplay::default.help_order_status',
-                'type' => 'selectlist',
-                'span' => 'left',
-                'options' => [Status::class, 'getDropdownOptionsForOrder'],
-            ],
-            'order_types' => [
-                'label' => 'lang:igniterlabs.kitchendisplay::default.label_order_types',
-                'comment' => 'lang:igniterlabs.kitchendisplay::default.help_order_types',
-                'type' => 'selectlist',
-                'span' => 'right',
-                'options' => [LocationAction::class, 'getOrderTypeOptions'],
-            ],
-            'menu_categories' => [
-                'label' => 'lang:igniterlabs.kitchendisplay::default.label_menu_categories',
-                'comment' => 'lang:igniterlabs.kitchendisplay::default.help_menu_categories',
-                'type' => 'selectlist',
-                'span' => 'left',
-                'options' => [\Igniter\Cart\Models\Category::class, 'getDropdownOptions'],
-            ],
-            'is_enabled' => [
-                'label' => 'lang:igniterlabs.kitchendisplay::default.label_status',
-                'type' => 'switch',
-                'default' => true,
-                'span' => 'right',
-            ],
-            'refresh_interval' => [
-                'label' => 'lang:igniterlabs.kitchendisplay::default.label_refresh_interval',
-                'type' => 'number',
-                'span' => 'left',
-                'default' => 30,
-                'attributes' => [
-                    'min' => 5,
-                    'step' => 5,
+        'tabs' => [
+            'fields' => [
+                'title' => [
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_title',
+                    'type' => 'text',
+                    'span' => 'left',
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
+                ],
+                'locations' => [
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_locations',
+                    'comment' => 'lang:igniterlabs.kitchendisplay::default.help_locations',
+                    'type' => 'selectlist',
+                    'span' => 'right',
+                    'options' => [\Igniter\Local\Models\Location::class, 'getDropdownOptions'],
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
+                ],
+                'order_statuses' => [
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_order_status',
+                    'comment' => 'lang:igniterlabs.kitchendisplay::default.help_order_status',
+                    'type' => 'selectlist',
+                    'span' => 'left',
+                    'options' => [Status::class, 'getDropdownOptionsForOrder'],
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
+                ],
+                'order_types' => [
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_order_types',
+                    'comment' => 'lang:igniterlabs.kitchendisplay::default.help_order_types',
+                    'type' => 'selectlist',
+                    'span' => 'right',
+                    'options' => [LocationAction::class, 'getOrderTypeOptions'],
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
+                ],
+                'menu_categories' => [
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_menu_categories',
+                    'comment' => 'lang:igniterlabs.kitchendisplay::default.help_menu_categories',
+                    'type' => 'selectlist',
+                    'span' => 'left',
+                    'options' => [\Igniter\Cart\Models\Category::class, 'getDropdownOptions'],
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
+                ],
+                'is_enabled' => [
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_status',
+                    'type' => 'switch',
+                    'default' => true,
+                    'span' => 'right',
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
+                ],
+                'orders_limit' => [
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_orders_limit',
+                    'comment' => 'lang:igniterlabs.kitchendisplay::default.help_orders_limit',
+                    'type' => 'number',
+                    'span' => 'right',
+                    'default' => 20,
+                    'attributes' => [
+                        'min' => 1,
+                        'step' => 1,
+                    ],
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
+                ],
+                'display_from_date' => [
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_display_from_date',
+                    'comment' => 'lang:igniterlabs.kitchendisplay::default.help_display_from_date',
+                    'type' => 'datepicker',
+                    'span' => 'left',
+                    'mode' => 'date',
+                    'default' => today()->toDateString(),
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
+                ],
+                'column_new_statuses' => [
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_board_columns',
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_column_new',
+                    'type' => 'selectlist',
+                    'span' => 'left',
+                    'options' => [Status::class, 'getDropdownOptionsForOrder'],
+                    'default' => KitchenDisplay::getOrderStatus('Received'),
+                ],
+                'column_new_visible' => [
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_board_columns',
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_column_new_visible',
+                    'type' => 'switch',
+                    'span' => 'right',
+                    'default' => true,
+                ],
+                'column_preparing_statuses' => [
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_board_columns',
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_column_preparing',
+                    'type' => 'selectlist',
+                    'span' => 'left',
+                    'options' => [Status::class, 'getDropdownOptionsForOrder'],
+                    'default' => KitchenDisplay::getOrderStatus('Preparation'),
+                ],
+                'column_preparing_visible' => [
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_board_columns',
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_column_preparing_visible',
+                    'type' => 'switch',
+                    'span' => 'right',
+                    'default' => true,
+                ],
+                'column_ready_statuses' => [
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_board_columns',
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_column_ready',
+                    'type' => 'selectlist',
+                    'span' => 'left',
+                    'options' => [Status::class, 'getDropdownOptionsForOrder'],
+                    'default' => KitchenDisplay::getOrderStatus('Delivery'),
+                ],
+                'column_ready_visible' => [
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_board_columns',
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_column_ready_visible',
+                    'type' => 'switch',
+                    'span' => 'right',
+                    'default' => true,
+                ],
+                'column_completed_statuses' => [
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_board_columns',
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_column_completed',
+                    'type' => 'selectlist',
+                    'span' => 'left',
+                    'options' => [Status::class, 'getDropdownOptionsForOrder'],
+                    'default' => KitchenDisplay::getOrderStatus('Completed'),
+                ],
+                'column_completed_visible' => [
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_board_columns',
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_column_completed_visible',
+                    'type' => 'switch',
+                    'span' => 'right',
+                    'default' => true,
+                ],
+                'column_on_hold_status' => [
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_board_columns',
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_column_on_hold',
+                    'type' => 'select',
+                    'span' => 'left',
+                    'options' => [Status::class, 'getDropdownOptionsForOrder'],
+                    'default' => KitchenDisplay::getOrderStatus('Pending')[0] ?? null,
+                ],
+                'column_on_hold_visible' => [
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_board_columns',
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_column_on_hold_visible',
+                    'type' => 'switch',
+                    'span' => 'right',
+                    'default' => true,
+                ],
+                'hidden_card_fields' => [
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_board_columns',
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_hidden_card_fields',
+                    'comment' => 'lang:igniterlabs.kitchendisplay::default.help_hidden_card_fields',
+                    'type' => 'checkboxlist',
+                    'span' => 'left',
+                    'options' => [
+                        'customer_name' => 'lang:igniterlabs.kitchendisplay::default.option_customer_name',
+                        'order_id' => 'lang:igniterlabs.kitchendisplay::default.option_order_id',
+                        'order_type' => 'lang:igniterlabs.kitchendisplay::default.option_order_type',
+                    ],
                 ],
             ],
-            'orders_limit' => [
-                'label' => 'lang:igniterlabs.kitchendisplay::default.label_orders_limit',
-                'comment' => 'lang:igniterlabs.kitchendisplay::default.help_orders_limit',
-                'type' => 'number',
-                'span' => 'right',
-                'default' => 20,
-                'attributes' => [
-                    'min' => 1,
-                    'step' => 1,
-                ],
-            ],
-        ]
+        ],
     ]
 ];

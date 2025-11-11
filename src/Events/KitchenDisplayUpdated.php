@@ -2,7 +2,6 @@
 
 namespace IgniterLabs\KitchenDisplay\Events;
 
-use Igniter\Cart\Models\Order;
 use Illuminate\Broadcasting\Channel;
 
 //use Illuminate\Broadcasting\PrivateChannel;
@@ -14,7 +13,7 @@ class KitchenDisplayUpdated implements ShouldBroadcast
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public Order $order)
+    public function __construct(public $orderId, public $newTime)
     {
     }
 
@@ -28,5 +27,13 @@ class KitchenDisplayUpdated implements ShouldBroadcast
     public function broadcastAs(): string
     {
         return 'kitchendisplay.updated';
+    }
+
+    public function broadcastWith(): array
+    {
+        return [
+            'order_id' => $this->orderId,
+            'new_time' => $this->newTime,
+        ];
     }
 }

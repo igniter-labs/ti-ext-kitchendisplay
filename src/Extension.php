@@ -39,7 +39,7 @@ class Extension extends BaseExtension
                         'priority' => 350,
                         'title' => lang('igniterlabs.kitchendisplay::default.text_title'),
                         'class' => 'kitchendisplay',
-                        'href' => admin_url('kitchen_display'),
+                        'href' => admin_url('igniterlabs/kitchendisplay/kitchen_display'),
                         'permission' => 'IgniterLabs.KitchenDisplay.Manage'
                     ]
                 ]

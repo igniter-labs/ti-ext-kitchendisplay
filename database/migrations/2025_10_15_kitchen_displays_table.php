@@ -17,9 +17,19 @@ return new class extends Migration {
             $table->json('order_statuses')->nullable();
             $table->json('order_types')->nullable();
             $table->json('menu_categories')->nullable();
-            $table->unsignedInteger('refresh_interval')->default(30);
             $table->unsignedInteger('orders_limit')->default(20);
-            $table->json('display_design')->nullable(); // JSON structure for display settings
+            $table->date('display_from_date')->default(now());
+            $table->json('column_new_statuses')->default(json_encode(['Received']));
+            $table->boolean('column_new_visible')->default(true);
+            $table->json('column_preparing_statuses')->default(json_encode(['Preparation']));
+            $table->boolean('column_preparing_visible')->default(true);
+            $table->json('column_ready_statuses')->default(json_encode(['Delivery']));
+            $table->boolean('column_ready_visible')->default(true);
+            $table->json('column_completed_statuses')->default(json_encode(['Completed']));
+            $table->boolean('column_completed_visible')->default(true);
+            $table->unsignedInteger('column_on_hold_status')->nullable();
+            $table->boolean('column_on_hold_visible')->default(true);
+            $table->json('hidden_card_fields')->default(json_encode([]));
             $table->boolean('is_enabled')->default(true);
             $table->timestamps();
         });
