@@ -17,58 +17,10 @@ The TastyIgniter Kitchen Display System extension provides a digital solution fo
 - **Wait Time Management** - Increment wait time or set custom times for orders
 - **On-Hold Status** - Dedicated pause button for holding orders
 - **Flexible Filtering** - Filter by location, status, order type, and menu category
-- **Responsive Design** - Optimized for desktop and tablet displays
-- **Scroll Position Preservation** - Maintains scroll position during automatic refreshes
-
-## Installation
-
-You can install the extension via composer:
-
-```bash
-composer require igniterlabs/ti-ext-kitchendisplay -W
-```
-
-Run database migrations:
-
-```bash
-php artisan igniter:up
-```
 
 ## Documentation
 
-Full documentation can be found [here](docs/index.md).
-
-The documentation includes:
-- Complete feature overview
-- Installation and setup instructions
-- Configuration guide with examples
-- User interface walkthrough
-- Troubleshooting guide
-- Best practices
-
-## Requirements
-
-- TastyIgniter 4.0 or higher
-- PHP 8.1 or higher
-
-## Quick Start
-
-1. Install the extension via composer
-2. Run database migrations
-3. Navigate to **Tools → Kitchen Display** in the admin panel
-4. Create a new Kitchen Display configuration
-5. Click on the display to open it and start managing orders
-
-## Key Configuration Options
-
-- **Locations**: Filter orders by specific locations
-- **Order Status**: Show only orders with selected statuses
-- **Order Types**: Filter by delivery or collection
-- **Menu Categories**: Display orders with items from specific categories
-- **Board Columns**: Customize which statuses appear in each column
-- **Hidden Fields**: Hide sensitive information (customer name, order ID, order type)
-- **Orders Limit**: Control how many orders are displayed (default: 20)
-- **Display From Date**: Choose the starting date for order display
+More documentation can be found on [here](https://github.com/igniter-labs/ti-ext-kitchendisplay/blob/master/docs/index.md).
 
 ## Changelog
 

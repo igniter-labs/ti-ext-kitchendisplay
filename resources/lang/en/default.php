@@ -3,12 +3,10 @@
 return [
     'label_title' => 'Title',
     'label_locations' => 'Locations',
-    'label_order_status' => 'Order Status',
     'label_order_types' => 'Order Types',
     'label_menu_categories' => 'Menu Categories',
     'label_status' => 'Status',
     'label_orders_limit' => 'Orders Limit',
-    'label_display_from_date' => 'Display Orders From',
 
     'column_title' => 'Title',
     'column_status' => 'Status',
@@ -48,13 +46,11 @@ return [
 
     'help_permission' => 'Allow users to manage Kitchen Display settings',
     'help_locations' => 'Filter orders by location. Leave empty to show all locations',
-    'help_order_status' => 'Filter orders by status. Leave empty to show all statuses',
     'help_order_types' => 'Filter orders by type. Leave empty to show all types',
     'help_menu_categories' => 'Filter orders by menu category. Leave empty to show all categories',
     'help_users_assigned_only' => 'When enabled, only orders assigned to the logged in user will be shown except for Admin users',
     'help_users_assigned' => 'Leave empty to display orders assigned to all users',
     'help_orders_limit' => 'Display latest X orders (default is 20, limit to 100)',
-    'help_display_from_date' => 'Choose the date from which to display orders. Default is today. Orders from this date onwards will be shown.',
     'help_hidden_card_fields' => 'Choose which fields to hide from order cards. Leave empty to display all fields.',
     'help_board_columns' => 'Customize the board columns and their associated order statuses.',
 

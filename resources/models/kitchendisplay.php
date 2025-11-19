@@ -93,14 +93,6 @@ return [
                     'options' => [\Igniter\Local\Models\Location::class, 'getDropdownOptions'],
                     'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
                 ],
-                'order_statuses' => [
-                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_order_status',
-                    'comment' => 'lang:igniterlabs.kitchendisplay::default.help_order_status',
-                    'type' => 'selectlist',
-                    'span' => 'left',
-                    'options' => [Status::class, 'getDropdownOptionsForOrder'],
-                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
-                ],
                 'order_types' => [
                     'label' => 'lang:igniterlabs.kitchendisplay::default.label_order_types',
                     'comment' => 'lang:igniterlabs.kitchendisplay::default.help_order_types',
@@ -117,13 +109,6 @@ return [
                     'options' => [\Igniter\Cart\Models\Category::class, 'getDropdownOptions'],
                     'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
                 ],
-                'is_enabled' => [
-                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_status',
-                    'type' => 'switch',
-                    'default' => true,
-                    'span' => 'right',
-                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
-                ],
                 'orders_limit' => [
                     'label' => 'lang:igniterlabs.kitchendisplay::default.label_orders_limit',
                     'comment' => 'lang:igniterlabs.kitchendisplay::default.help_orders_limit',
@@ -136,15 +121,14 @@ return [
                     ],
                     'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
                 ],
-                'display_from_date' => [
-                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_display_from_date',
-                    'comment' => 'lang:igniterlabs.kitchendisplay::default.help_display_from_date',
-                    'type' => 'datepicker',
-                    'span' => 'left',
-                    'mode' => 'date',
-                    'default' => today()->toDateString(),
+                'is_enabled' => [
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_status',
+                    'type' => 'switch',
+                    'default' => true,
+                    'span' => 'right',
                     'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
                 ],
+
                 'board_columns' => [
                     'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_board_columns',
                     'label' => 'lang:igniterlabs.kitchendisplay::default.label_board_columns',
