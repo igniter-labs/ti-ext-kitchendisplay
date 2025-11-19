@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\KitchenDisplay\Models;
 
 use Igniter\Flame\Database\Model;
@@ -30,7 +32,7 @@ class KitchenDisplay extends Model
 
     public function getBoardColumnsAttribute($value)
     {
-        return json_decode($value ?: '', true) ?: [
+        return json_decode((string)$value ?: '', true) ?: [
             [
                 'code' => 'new',
                 'label' => lang('igniterlabs.kitchendisplay::default.text_board_column_new'),
@@ -66,8 +68,6 @@ class KitchenDisplay extends Model
 
     public function getVisibleBoardColumns(): Collection
     {
-        return collect($this->board_columns ?: [])->filter(function (array $column) {
-            return array_get($column, 'isVisible', false);
-        })->sortBy('priority');
+        return collect($this->board_columns ?: [])->filter(fn(array $column) => array_get($column, 'isVisible', false))->sortBy('priority');
     }
 }

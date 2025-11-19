@@ -2,7 +2,6 @@
 
 use Igniter\Admin\Models\Status;
 use Igniter\Cart\Models\Concerns\LocationAction;
-use IgniterLabs\KitchenDisplay\Models\KitchenDisplay;
 
 return [
     'list' => [
@@ -36,9 +35,9 @@ return [
                 'label' => 'lang:igniterlabs.kitchendisplay::default.column_title',
                 'type' => 'text',
                 'sortable' => true,
-                'formatter' => function ($record, $column, $value) {
+                'formatter' => function($record, $column, $value) {
                     return sprintf('<strong><a href="%s">%s</a></strong>',
-                        admin_url('kitchendisplays/view/' . $record->id), e($value));
+                        admin_url('kitchendisplays/view/'.$record->id), e($value));
                 },
             ],
             'is_enabled' => [
@@ -53,7 +52,7 @@ return [
                 'type' => 'datetime',
                 'sortable' => true,
             ],
-        ]
+        ],
     ],
 
     'form' => [
@@ -197,5 +196,5 @@ return [
                 ],
             ],
         ],
-    ]
+    ],
 ];

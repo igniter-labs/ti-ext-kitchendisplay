@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\KitchenDisplay\Widgets;
 
 use Carbon\Carbon;
@@ -12,6 +14,7 @@ use IgniterLabs\KitchenDisplay\Data\BoardItem;
 use IgniterLabs\KitchenDisplay\Models\KitchenDisplay as KitchenDisplayModel;
 use Illuminate\Support\Collection;
 use Override;
+use stdClass;
 
 class KitchenDisplay extends BaseWidget
 {
@@ -58,15 +61,14 @@ class KitchenDisplay extends BaseWidget
     public function getColumnItems(object $boardColumn): array
     {
         return collect($this->vars['boardItems'])
-            ->filter(function (BoardItem $item) use ($boardColumn) {
-                return $item->statusId === (int)$boardColumn->statusId;
-            })
+            ->filter(fn(BoardItem $item): bool => $item->statusId === (int)$boardColumn->statusId)
             ->all();
     }
 
     public function isHiddenCardField(string $field): bool
     {
         $hiddenFields = $this->model->hidden_card_fields ?: [];
+
         return in_array($field, $hiddenFields);
     }
 
@@ -75,9 +77,10 @@ class KitchenDisplay extends BaseWidget
         $availableStatuses = $this->getAvailableStatuses();
 
         return $this->model->getVisibleBoardColumns()
-            ->filter(fn(array $boardColumn) => array_get($boardColumn, 'code') !== 'on-hold' && ((int)array_get($boardColumn, 'statusId')) !== $itemStatusId)
-            ->mapWithKeys(function(array $boardColumn) use ($availableStatuses) {
+            ->filter(fn(array $boardColumn): bool => array_get($boardColumn, 'code') !== 'on-hold' && ((int)array_get($boardColumn, 'statusId')) !== $itemStatusId)
+            ->mapWithKeys(function(array $boardColumn) use ($availableStatuses): array {
                 $statusId = array_get($boardColumn, 'statusId');
+
                 return [$statusId => $availableStatuses->firstWhere('status_id', $statusId)->status_name ?? ''];
             })
             ->filter()
@@ -91,7 +94,7 @@ class KitchenDisplay extends BaseWidget
         return $status->status_color ?? '#d2d6de';
     }
 
-    public function onViewToggle()
+    public function onViewToggle(): array
     {
         $currentMode = $this->getSession('kitchendisplay.viewMode', 'board');
         $newMode = $currentMode === 'board' ? 'list' : 'board';
@@ -136,7 +139,7 @@ class KitchenDisplay extends BaseWidget
         $currentTime = Carbon::createFromFormat('H:i:s', $order->order_time);
         $newTime = ($customTime = array_get($validated, 'customTime'))
             ? Carbon::createFromFormat('H:i', $customTime)
-            : $currentTime->addMinutes((int) array_get($validated, 'minutes'));
+            : $currentTime->addMinutes((int)array_get($validated, 'minutes'));
 
         $order->order_time = $newTime->format('H:i:s');
         $order->save();
@@ -157,7 +160,7 @@ class KitchenDisplay extends BaseWidget
 
     protected function getBoardColumns(): array
     {
-        return $this->model->getVisibleBoardColumns()->map(fn(array $boardColum) => (object) $boardColum)->all();
+        return $this->model->getVisibleBoardColumns()->map(fn(array $boardColum): stdClass => (object)$boardColum)->all();
     }
 
     protected function getBoardItems(): array
@@ -174,12 +177,12 @@ class KitchenDisplay extends BaseWidget
 
     protected function getAvailableStatuses(): Collection
     {
-        if ($this->availableStatuses) {
+        if ($this->availableStatuses instanceof Collection) {
             return $this->availableStatuses;
         }
 
         $visibleStatusIds = $this->model->getVisibleBoardColumns()->pluck('statusId')->filter()->all();
-        if (! $visibleStatusIds) {
+        if (!$visibleStatusIds) {
             return [];
         }
 

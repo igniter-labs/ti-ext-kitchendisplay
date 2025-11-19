@@ -1,20 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\KitchenDisplay\Http\Controllers;
 
-use Carbon\Carbon;
 use Igniter\Admin\Classes\AdminController;
 use Igniter\Admin\Facades\AdminMenu;
 use Igniter\Admin\Facades\Template;
 use Igniter\Admin\Http\Actions\FormController;
 use Igniter\Admin\Http\Actions\ListController;
-use Igniter\Admin\Models\Status;
 use Igniter\Cart\Models\Order;
 use IgniterLabs\KitchenDisplay\Data\BoardItem;
 use IgniterLabs\KitchenDisplay\Http\Requests\KitchenDisplayRequest;
 use IgniterLabs\KitchenDisplay\Models\KitchenDisplay as KitchenDisplayModel;
 use IgniterLabs\KitchenDisplay\Widgets\KitchenDisplay;
-use Illuminate\Support\Collection;
 
 class KitchenDisplays extends AdminController
 {
@@ -56,7 +55,9 @@ class KitchenDisplays extends AdminController
     ];
 
     public ?KitchenDisplay $kitchenDisplayWidget = null;
+
     public array $kitchenDisplayConfig = [];
+
     public array $requiredKitchenDisplayConfig = [];
 
     protected string|array|null $requiredPermissions = 'IgniterLabs.KitchenDisplay.Manage';
@@ -73,14 +74,14 @@ class KitchenDisplays extends AdminController
         AdminMenu::setContext('kitchendisplay', 'tools');
     }
 
-    public function view(string $context, string $kitchenDisplayId)
+    public function view(string $context, string $kitchenDisplayId): string
     {
         $model = KitchenDisplayModel::find($kitchenDisplayId);
 
         abort_if(!$model, 404);
         abort_if(!$model->is_enabled, 403);
 
-        $pageTitle = $model->title . ' | ' . lang('igniterlabs.kitchendisplay::default.text_title');
+        $pageTitle = $model->title.' | '.lang('igniterlabs.kitchendisplay::default.text_title');
         Template::setTitle($pageTitle);
         Template::setHeading($pageTitle);
         AdminMenu::setPreviousUrl('kitchendisplays');
@@ -111,7 +112,7 @@ class KitchenDisplays extends AdminController
 
     public function renderKitchenDisplay(): string
     {
-         return $this->kitchenDisplayWidget->render();
+        return $this->kitchenDisplayWidget->render();
     }
 
     protected function getFilteredOrders(KitchenDisplayModel $model): array
@@ -131,7 +132,7 @@ class KitchenDisplays extends AdminController
         }
 
         if (!empty($model->menu_categories)) {
-            $query->whereHas('menus.menu.categories', function ($q) use ($model) {
+            $query->whereHas('menus.menu.categories', function($q) use ($model): void {
                 $q->whereIn('category_id', $model->menu_categories);
             });
         }
@@ -142,19 +143,17 @@ class KitchenDisplays extends AdminController
             ->latest()
             ->take($model->orders_limit ?? 20)
             ->get()
-            ->map(function(Order $order) {
-                return new BoardItem(
-                    id: $order->order_id,
-                    statusId: $order->status_id,
-                    statusName: $order->status->status_name,
-                    customerName: $order->customer_name,
-                    time: $order->order_time,
-                    formattedTime: $order->order_date->setTimeFromTimeString($order->order_time)->format('H:i'),
-                    type: $order->order_type,
-                    typeName: $order->order_type_name,
-                    details: $order->getOrderMenusWithOptions(),
-                );
-            })
+            ->map(fn(Order $order): BoardItem => new BoardItem(
+                id: $order->order_id,
+                statusId: $order->status_id,
+                statusName: $order->status->status_name,
+                customerName: $order->customer_name,
+                time: $order->order_time,
+                formattedTime: $order->order_date->setTimeFromTimeString($order->order_time)->format('H:i'),
+                type: $order->order_type,
+                typeName: $order->order_type_name,
+                details: $order->getOrderMenusWithOptions(),
+            ))
             ->toArray();
     }
 }

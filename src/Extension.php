@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\KitchenDisplay;
 
 use Igniter\System\Classes\BaseExtension;
@@ -19,6 +21,7 @@ class Extension extends BaseExtension
         ];
     }
 
+    #[Override]
     public function registerNavigation(): array
     {
         return [
@@ -29,17 +32,17 @@ class Extension extends BaseExtension
                         'title' => lang('igniterlabs.kitchendisplay::default.text_title'),
                         'class' => 'kitchendisplay',
                         'href' => admin_url('kitchendisplays'),
-                        'permission' => 'IgniterLabs.KitchenDisplay.Manage'
-                    ]
-                ]
-            ]
+                        'permission' => 'IgniterLabs.KitchenDisplay.Manage',
+                    ],
+                ],
+            ],
         ];
     }
 
     public function registerEventBroadcasts(): array
     {
         return [
-            'igniter.cart.orderStatusAdded' => KitchenDisplayUpdated::class
+            'igniter.cart.orderStatusAdded' => KitchenDisplayUpdated::class,
         ];
     }
 }

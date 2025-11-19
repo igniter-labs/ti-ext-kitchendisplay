@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\KitchenDisplay\Data;
 
 use Illuminate\Support\Collection;
 
-class BoardItem {
+class BoardItem
+{
     public function __construct(
         public int $id,
         public int $statusId,
