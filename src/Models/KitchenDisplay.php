@@ -2,8 +2,8 @@
 
 namespace IgniterLabs\KitchenDisplay\Models;
 
-use Igniter\Admin\Models\Status;
 use Igniter\Flame\Database\Model;
+use Illuminate\Support\Collection;
 
 class KitchenDisplay extends Model
 {
@@ -17,6 +17,7 @@ class KitchenDisplay extends Model
         'order_statuses' => 'array',
         'order_types' => 'array',
         'users_assigned' => 'array',
+        'board_columns' => 'array',
         'column_new_statuses' => 'array',
         'column_preparing_statuses' => 'array',
         'column_ready_statuses' => 'array',
@@ -27,13 +28,46 @@ class KitchenDisplay extends Model
 
     protected $guarded = [];
 
-    public static function getOrderStatus(string|array $statusNames): array {
-        if(is_string($statusNames)) {
-            $statusNames = [$statusNames];
-        }
-        return Status::isForOrder()
-            ->whereIn('status_name', $statusNames)
-            ->pluck('status_id')
-            ->toArray();
+    public function getBoardColumnsAttribute($value)
+    {
+        return json_decode($value ?: '', true) ?: [
+            [
+                'code' => 'new',
+                'label' => lang('igniterlabs.kitchendisplay::default.text_board_column_new'),
+                'statusId' => setting('default_order_status'),
+                'isVisible' => true,
+            ],
+            [
+                'code' => 'preparing',
+                'label' => lang('igniterlabs.kitchendisplay::default.text_board_column_preparing'),
+                'statusId' => setting('processing_order_status')[0] ?? null,
+                'isVisible' => true,
+            ],
+            [
+                'code' => 'ready',
+                'label' => lang('igniterlabs.kitchendisplay::default.text_board_column_ready'),
+                'statusId' => null,
+                'isVisible' => true,
+            ],
+            [
+                'code' => 'completed',
+                'label' => lang('igniterlabs.kitchendisplay::default.text_board_column_completed'),
+                'statusId' => setting('completed_order_status')[0] ?? null,
+                'isVisible' => true,
+            ],
+            [
+                'code' => 'on-hold',
+                'label' => lang('igniterlabs.kitchendisplay::default.text_board_column_on_hold'),
+                'statusId' => null,
+                'isVisible' => true,
+            ],
+        ];
+    }
+
+    public function getVisibleBoardColumns(): Collection
+    {
+        return collect($this->board_columns ?: [])->filter(function (array $column) {
+            return array_get($column, 'isVisible', false);
+        })->sortBy('priority');
     }
 }

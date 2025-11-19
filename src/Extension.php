@@ -9,17 +9,6 @@ use Override;
 class Extension extends BaseExtension
 {
     #[Override]
-    public function register(): void
-    {
-
-    }
-
-    public function boot(): void
-    {
-
-    }
-
-    #[Override]
     public function registerPermissions(): array
     {
         return [
@@ -39,7 +28,7 @@ class Extension extends BaseExtension
                         'priority' => 350,
                         'title' => lang('igniterlabs.kitchendisplay::default.text_title'),
                         'class' => 'kitchendisplay',
-                        'href' => admin_url('igniterlabs/kitchendisplay/kitchen_display'),
+                        'href' => admin_url('kitchendisplays'),
                         'permission' => 'IgniterLabs.KitchenDisplay.Manage'
                     ]
                 ]

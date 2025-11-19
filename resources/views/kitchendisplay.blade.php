@@ -10,9 +10,6 @@
             <span>{!! Template::getHeading() !!}</span>
         </h4>
     </div>
-    <button class="btn btn-sm btn-outline-secondary refresh-orders-btn" title="Refresh orders">
-        <i class="fa fa-refresh"></i>
-    </button>
 </div>
 <div
     data-control="kitchen-display"

@@ -11,7 +11,7 @@ return [
                 'create' => [
                     'label' => 'lang:igniter::admin.button_new',
                     'class' => 'btn btn-primary',
-                    'href' => 'igniterlabs/kitchendisplay/kitchen_display/create',
+                    'href' => 'kitchendisplays/create',
                 ],
             ],
         ],
@@ -29,7 +29,7 @@ return [
                 'iconCssClass' => 'fa fa-pencil',
                 'attributes' => [
                     'class' => 'btn btn-edit',
-                    'href' => 'igniterlabs/kitchendisplay/kitchen_display/edit/{id}',
+                    'href' => 'kitchendisplays/edit/{id}',
                 ],
             ],
             'title' => [
@@ -38,17 +38,15 @@ return [
                 'sortable' => true,
                 'formatter' => function ($record, $column, $value) {
                     return sprintf('<strong><a href="%s">%s</a></strong>',
-                        admin_url('igniterlabs/kitchendisplay/kitchen_display/view/' . $record->id), e($value));
+                        admin_url('kitchendisplays/view/' . $record->id), e($value));
                 },
             ],
             'is_enabled' => [
                 'label' => 'lang:igniterlabs.kitchendisplay::default.column_status',
                 'type' => 'switch',
                 'sortable' => true,
-                'formatter' => function ($record, $column, $value) {
-                    return $value ? lang('igniterlabs.kitchendisplay::default.text_enabled') :
-                        lang('igniterlabs.kitchendisplay::default.text_disabled');
-                }
+                'onText' => 'lang:igniterlabs.kitchendisplay::default.text_enabled',
+                'offText' => 'lang:igniterlabs.kitchendisplay::default.text_disabled',
             ],
             'created_at' => [
                 'label' => 'lang:igniter::admin.column_date_added',
