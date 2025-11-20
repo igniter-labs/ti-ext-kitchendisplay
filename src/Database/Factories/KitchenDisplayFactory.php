@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace IgniterLabs\KitchenDisplay\Database\Factories;
 
 use Igniter\Flame\Database\Factories\Factory;
-use Igniter\Local\Models\Location;
 use IgniterLabs\KitchenDisplay\Models\KitchenDisplay;
 use Override;
 

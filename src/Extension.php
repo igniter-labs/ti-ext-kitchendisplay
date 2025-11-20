@@ -12,7 +12,8 @@ use Override;
 
 class Extension extends BaseExtension
 {
-    public function boot()
+    #[Override]
+    public function boot(): void
     {
         Relation::morphMap([
             'kitchen_displays' => KitchenDisplay::class,

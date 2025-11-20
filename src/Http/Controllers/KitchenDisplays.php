@@ -24,7 +24,7 @@ class KitchenDisplays extends AdminController
         ListController::class,
         FormController::class,
         LocationAwareController::class,
-        AssigneeController::class
+        AssigneeController::class,
     ];
 
     public array $listConfig = [

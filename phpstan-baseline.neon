@@ -1,9 +1,27 @@
 parameters:
 	ignoreErrors:
 		-
+			message: '#^Call to an undefined method IgniterLabs\\KitchenDisplay\\Models\\KitchenDisplay\:\:locations\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Database/Factories/KitchenDisplayFactory.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Factories\\Factory\<Illuminate\\Database\\Eloquent\\Model\>\:\:afterCreating\(\) expects Closure\(Illuminate\\Database\\Eloquent\\Model\)\: mixed, Closure\(IgniterLabs\\KitchenDisplay\\Models\\KitchenDisplay\)\: void given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Database/Factories/KitchenDisplayFactory.php
+
+		-
 			message: '#^Access to an undefined property IgniterLabs\\KitchenDisplay\\Http\\Controllers\\KitchenDisplays\:\:\$primaryAlias\.$#'
 			identifier: property.notFound
 			count: 1
+			path: src/Http/Controllers/KitchenDisplays.php
+
+		-
+			message: '#^Access to an undefined property IgniterLabs\\KitchenDisplay\\Models\\KitchenDisplay\:\:\$locations\.$#'
+			identifier: property.notFound
+			count: 2
 			path: src/Http/Controllers/KitchenDisplays.php
 
 		-
@@ -13,25 +31,7 @@ parameters:
 			path: src/Http/Controllers/KitchenDisplays.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$is_enabled\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Http/Controllers/KitchenDisplays.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$title\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Http/Controllers/KitchenDisplays.php
-
-		-
 			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,Illuminate\\Database\\Eloquent\\Model\>\:\:map\(\) expects callable\(Illuminate\\Database\\Eloquent\\Model, int\)\: IgniterLabs\\KitchenDisplay\\Data\\BoardItem, Closure\(Igniter\\Cart\\Models\\Order\)\: IgniterLabs\\KitchenDisplay\\Data\\BoardItem given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Http/Controllers/KitchenDisplays.php
-
-		-
-			message: '#^Parameter \#1 \$model of method IgniterLabs\\KitchenDisplay\\Http\\Controllers\\KitchenDisplays\:\:makeKitchenDisplay\(\) expects IgniterLabs\\KitchenDisplay\\Models\\KitchenDisplay, Illuminate\\Database\\Eloquent\\Model given\.$#'
 			identifier: argument.type
 			count: 1
 			path: src/Http/Controllers/KitchenDisplays.php
