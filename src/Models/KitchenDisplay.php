@@ -6,18 +6,22 @@ namespace IgniterLabs\KitchenDisplay\Models;
 
 use Igniter\Flame\Database\Factories\HasFactory;
 use Igniter\Flame\Database\Model;
+use Igniter\Local\Models\Concerns\Locationable;
+use Igniter\Local\Models\Location;
 use Illuminate\Support\Collection;
 
 class KitchenDisplay extends Model
 {
     use HasFactory;
+    use Locationable;
+
+    public const string LOCATIONABLE_RELATION = 'locations';
 
     protected $table = 'kitchen_displays';
 
     public $timestamps = true;
 
     public $casts = [
-        'locations' => 'array',
         'menu_categories' => 'array',
         'order_types' => 'array',
         'board_columns' => 'array',
@@ -25,6 +29,12 @@ class KitchenDisplay extends Model
     ];
 
     protected $guarded = [];
+
+    public $relation = [
+        'morphToMany' => [
+            'locations' => [Location::class, 'name' => 'locationable'],
+        ],
+    ];
 
     public function getBoardColumnsAttribute($value)
     {

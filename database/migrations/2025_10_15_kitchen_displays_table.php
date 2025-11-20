@@ -14,7 +14,6 @@ return new class extends Migration
             $table->engine = 'InnoDB';
             $table->id();
             $table->string('title');
-            $table->json('locations')->nullable();
             $table->json('order_types')->nullable();
             $table->json('menu_categories')->nullable();
             $table->unsignedInteger('orders_limit')->default(20);

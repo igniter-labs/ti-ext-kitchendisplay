@@ -57,7 +57,7 @@ it('loads kitchen display view page for enabled display', function(): void {
     ]);
 
     $kitchenDisplay = KitchenDisplay::factory()
-        ->withLocations([$order->location_id])
+        ->withLocations([$order->location])
         ->withOrderTypes(['delivery'])
         ->withMenuCategories([$menu->categories->first()->getKey()])
         ->enabled()
@@ -65,7 +65,8 @@ it('loads kitchen display view page for enabled display', function(): void {
 
     actingAsSuperUser()
         ->get(route('igniterlabs.kitchendisplay.kitchen_displays', ['slug' => 'view/'.$kitchenDisplay->getKey()]))
-        ->assertOk();
+        ->assertOk()
+        ->assertSee($order->customer_name);
 });
 
 it('redirects for non-existent or disabled kitchen display view', function(): void {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace IgniterLabs\KitchenDisplay\Database\Factories;
 
 use Igniter\Flame\Database\Factories\Factory;
+use Igniter\Local\Models\Location;
 use IgniterLabs\KitchenDisplay\Models\KitchenDisplay;
 use Override;
 
@@ -17,7 +18,6 @@ class KitchenDisplayFactory extends Factory
     {
         return [
             'title' => $this->faker->words(3, true),
-            'locations' => null,
             'order_types' => null,
             'menu_categories' => null,
             'orders_limit' => 20,
@@ -41,11 +41,11 @@ class KitchenDisplayFactory extends Factory
         ]);
     }
 
-    public function withLocations(array $locationIds): static
+    public function withLocations(array $locations): static
     {
-        return $this->state(fn(array $attributes): array => [
-            'locations' => $locationIds,
-        ]);
+        return $this->afterCreating(function(KitchenDisplay $kitchenDisplay) use ($locations): void {
+            $kitchenDisplay->locations()->attach($locations);
+        });
     }
 
     public function withOrderTypes(array $orderTypes): static

@@ -10,6 +10,8 @@ use Igniter\Admin\Facades\Template;
 use Igniter\Admin\Http\Actions\FormController;
 use Igniter\Admin\Http\Actions\ListController;
 use Igniter\Cart\Models\Order;
+use Igniter\Local\Http\Actions\LocationAwareController;
+use Igniter\User\Http\Actions\AssigneeController;
 use IgniterLabs\KitchenDisplay\Data\BoardItem;
 use IgniterLabs\KitchenDisplay\Http\Requests\KitchenDisplayRequest;
 use IgniterLabs\KitchenDisplay\Models\KitchenDisplay as KitchenDisplayModel;
@@ -21,6 +23,8 @@ class KitchenDisplays extends AdminController
     public array $implement = [
         ListController::class,
         FormController::class,
+        LocationAwareController::class,
+        AssigneeController::class
     ];
 
     public array $listConfig = [
@@ -87,7 +91,7 @@ class KitchenDisplays extends AdminController
 
     public function view(string $context, string $recordId): RedirectResponse|string
     {
-        $model = KitchenDisplayModel::find($recordId);
+        $model = $this->asExtension('FormController')->formFindModelObject($recordId);
 
         if (!$model || !$model->is_enabled) {
             flash()->error(lang('igniterlabs.kitchendisplay::default.alert_kitchen_display_disabled'));
@@ -137,8 +141,8 @@ class KitchenDisplays extends AdminController
 
         $query->whereIn('status_id', $visibleStatusIds);
 
-        if (!empty($model->locations)) {
-            $query->whereIn('location_id', $model->locations);
+        if ($model->locations->isNotEmpty()) {
+            $query->whereIn('location_id', $model->locations->pluck('location_id')->all());
         }
 
         if (!empty($model->order_types)) {

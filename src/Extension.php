@@ -6,10 +6,19 @@ namespace IgniterLabs\KitchenDisplay;
 
 use Igniter\System\Classes\BaseExtension;
 use IgniterLabs\KitchenDisplay\Events\KitchenDisplayUpdated;
+use IgniterLabs\KitchenDisplay\Models\KitchenDisplay;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Override;
 
 class Extension extends BaseExtension
 {
+    public function boot()
+    {
+        Relation::morphMap([
+            'kitchen_displays' => KitchenDisplay::class,
+        ]);
+    }
+
     #[Override]
     public function registerPermissions(): array
     {

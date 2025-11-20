@@ -15,7 +15,6 @@ it('configures kitchen display model correctly', function(): void {
         ->and($kitchenDisplay->timestamps)->toBeTrue()
         ->and($kitchenDisplay->getGuarded())->toBe([])
         ->and($kitchenDisplay->getCasts())->toHaveKeys([
-            'locations',
             'menu_categories',
             'order_types',
             'board_columns',
@@ -103,13 +102,12 @@ it('returns only visible board columns', function(): void {
 
 it('handles null array attributes correctly', function(): void {
     $kitchenDisplay = KitchenDisplay::factory()->create([
-        'locations' => null,
         'order_types' => null,
         'menu_categories' => null,
         'hidden_card_fields' => null,
     ]);
 
-    expect($kitchenDisplay->locations)->toBeNull()
+    expect($kitchenDisplay->locations->isEmpty())->toBeTrue()
         ->and($kitchenDisplay->order_types)->toBeNull()
         ->and($kitchenDisplay->menu_categories)->toBeNull()
         ->and($kitchenDisplay->hidden_card_fields)->toBeNull();
