@@ -14,6 +14,7 @@ use IgniterLabs\KitchenDisplay\Data\BoardItem;
 use IgniterLabs\KitchenDisplay\Http\Requests\KitchenDisplayRequest;
 use IgniterLabs\KitchenDisplay\Models\KitchenDisplay as KitchenDisplayModel;
 use IgniterLabs\KitchenDisplay\Widgets\KitchenDisplay;
+use Illuminate\Http\RedirectResponse;
 
 class KitchenDisplays extends AdminController
 {
@@ -74,12 +75,25 @@ class KitchenDisplays extends AdminController
         AdminMenu::setContext('kitchendisplay', 'tools');
     }
 
-    public function view(string $context, string $kitchenDisplayId): string
+    public function edit(string $context, string $recordId): void
     {
-        $model = KitchenDisplayModel::find($kitchenDisplayId);
+        Template::setButton('<i class="fa fa-eye"></i>', [
+            'class' => 'btn btn-default',
+            'href' => admin_url('kitchendisplays/view/'.$recordId),
+        ]);
 
-        abort_if(!$model, 404);
-        abort_if(!$model->is_enabled, 403);
+        $this->asExtension('FormController')->edit($context, $recordId);
+    }
+
+    public function view(string $context, string $recordId): RedirectResponse|string
+    {
+        $model = KitchenDisplayModel::find($recordId);
+
+        if (!$model || !$model->is_enabled) {
+            flash()->error(lang('igniterlabs.kitchendisplay::default.alert_kitchen_display_disabled'));
+
+            return $this->redirect('kitchendisplays');
+        }
 
         $pageTitle = $model->title.' | '.lang('igniterlabs.kitchendisplay::default.text_title');
         Template::setTitle($pageTitle);
@@ -88,7 +102,7 @@ class KitchenDisplays extends AdminController
 
         $this->kitchenDisplayWidget = $this->makeKitchenDisplay($model);
 
-        return $this->makeView('kitchendisplay/view');
+        return $this->makeView('kitchendisplay/view', ['model' => $model]);
     }
 
     protected function makeKitchenDisplay(KitchenDisplayModel $model): KitchenDisplay
@@ -133,7 +147,7 @@ class KitchenDisplays extends AdminController
 
         if (!empty($model->menu_categories)) {
             $query->whereHas('menus.menu.categories', function($q) use ($model): void {
-                $q->whereIn('category_id', $model->menu_categories);
+                $q->whereIn('menu_categories.category_id', $model->menu_categories);
             });
         }
 

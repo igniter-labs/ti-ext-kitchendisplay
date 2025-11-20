@@ -32,7 +32,7 @@ class KitchenDisplayRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'between:2,255'],
             'locations' => ['nullable', 'array'],
             'order_types' => ['nullable', 'array'],
             'menu_categories' => ['nullable', 'array'],

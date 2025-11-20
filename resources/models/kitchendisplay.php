@@ -44,8 +44,6 @@ return [
                 'label' => 'lang:igniterlabs.kitchendisplay::default.column_status',
                 'type' => 'switch',
                 'sortable' => true,
-                'onText' => 'lang:igniterlabs.kitchendisplay::default.text_enabled',
-                'offText' => 'lang:igniterlabs.kitchendisplay::default.text_disabled',
             ],
             'created_at' => [
                 'label' => 'lang:igniter::admin.column_date_added',

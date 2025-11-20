@@ -1,23 +1,29 @@
-@if($item->statusId != $onHoldStatusId)
+<button
+    class="btn btn-light border"
+    type="button"
+    data-control="item-status"
+    data-item-id="{{ $item->id }}"
+    data-status-id="{{$item->statusId != $onHoldStatusId ? $onHoldStatusId : $this->getNextStatusId($item->statusId)}}"
+>
+    <i class="fa {{$item->statusId != $onHoldStatusId ? 'fa-pause text-muted' : 'fa-play text-success'}}"></i>
+</button>
+<div class="btn-group w-100">
     <button
-        class="btn btn-light border d-flex align-items-center justify-content-center flex-shrink-0 text-muted"
         type="button"
+        class="btn btn-primary small fw-medium rounded-end-0 w-100"
         data-control="item-status"
         data-item-id="{{ $item->id }}"
-        data-status-id="0"
+        data-status-id="{{ $this->getNextStatusId($item->statusId) }}"
     >
-        <i class="fa fa-pause"></i>
+        {{ lang('igniterlabs.kitchendisplay::default.text_next') }}&nbsp;&nbsp;&nbsp;
+        <i class="fa fa-arrow-right-long"></i>
     </button>
-@endif
-<div class="dropdown flex-fill">
     <button
-        class="btn btn-primary dropdown-toggle w-100 small fw-medium"
         type="button"
+        class="btn btn-primary dropdown-toggle dropdown-toggle-split rounded-start-0"
         data-bs-toggle="dropdown"
-        data-item-id="{{ $item->id }}"
         aria-expanded="false"
-    >
-        {{ lang('igniterlabs.kitchendisplay::default.text_next') }}
+    ><span class="visually-hidden">Toggle Dropdown</span>
     </button>
     <ul class="dropdown-menu dropdown-menu-end">
         @forelse($this->getCardStatuses($item->statusId) as $statusId => $statusName)

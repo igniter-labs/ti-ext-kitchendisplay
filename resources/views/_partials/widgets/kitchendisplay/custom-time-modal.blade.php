@@ -29,7 +29,7 @@
                         name="customTime"
                         class="form-control"
                         pattern="[0-9]{2}:[0-9]{2}"
-                        value="{{ $item->time }}" />
+                        value="{{ $item->formattedTime }}" />
                     <small
                         class="text-muted"
                     >{{ lang('igniterlabs.kitchendisplay::default.text_order_time_help') }}</small>

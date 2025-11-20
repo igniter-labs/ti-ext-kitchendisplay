@@ -65,9 +65,3 @@ parameters:
 			identifier: method.notFound
 			count: 1
 			path: src/Widgets/KitchenDisplay.php
-
-		-
-			message: '#^Method IgniterLabs\\KitchenDisplay\\Widgets\\KitchenDisplay\:\:getAvailableStatuses\(\) should return Illuminate\\Support\\Collection but returns array\.$#'
-			identifier: return.type
-			count: 1
-			path: src/Widgets/KitchenDisplay.php

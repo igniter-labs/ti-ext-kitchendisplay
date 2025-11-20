@@ -1,9 +1,41 @@
+[data-toggle="full-screen"] {
+    .full-screen {
+        display: none;
+    }
+    .full-page {
+        display: inline-block;
+    }
+    .default {
+        display: none;
+    }
+}
 .kitchen-display-full-page {
     header.navbar {
         display: none;
     }
     .sidebar {
         display: none;
+    }
+    [data-toggle="full-screen"] .full-page {
+        display: none;
+    }
+    [data-toggle="full-screen"] .full-screen {
+        display: inline-block;
+    }
+    [data-toggle="full-screen"] .default {
+        display: none;
+    }
+
+    &.kitchen-display-fullscreen {
+        [data-toggle="full-screen"] .full-page {
+            display: none;
+        }
+        [data-toggle="full-screen"] .full-screen {
+            display: none;
+        }
+        [data-toggle="full-screen"] .default {
+            display: inline-block;
+        }
     }
 }
 

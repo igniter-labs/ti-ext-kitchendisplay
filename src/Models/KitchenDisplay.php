@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace IgniterLabs\KitchenDisplay\Models;
 
+use Igniter\Flame\Database\Factories\HasFactory;
 use Igniter\Flame\Database\Model;
 use Illuminate\Support\Collection;
 
 class KitchenDisplay extends Model
 {
+    use HasFactory;
+
     protected $table = 'kitchen_displays';
 
     public $timestamps = true;
@@ -16,15 +19,8 @@ class KitchenDisplay extends Model
     public $casts = [
         'locations' => 'array',
         'menu_categories' => 'array',
-        'order_statuses' => 'array',
         'order_types' => 'array',
-        'users_assigned' => 'array',
         'board_columns' => 'array',
-        'column_new_statuses' => 'array',
-        'column_preparing_statuses' => 'array',
-        'column_ready_statuses' => 'array',
-        'column_completed_statuses' => 'array',
-        'column_on_hold_status' => 'integer',
         'hidden_card_fields' => 'array',
     ];
 

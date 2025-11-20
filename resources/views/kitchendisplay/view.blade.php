@@ -17,6 +17,13 @@
             <i class="fa fa-refresh"></i>
         </button>
 
+        <a
+            class="btn btn-sm btn-outline-secondary view-toggle-btn"
+            href="{{admin_url('kitchendisplays/edit/'.$model->getKey())}}"
+            title="{{ lang('igniter::admin.text_edit') }}"
+        >
+            <i class="fa fa-pencil"></i>
+        </a>
         <button
             type="button"
             class="btn btn-sm btn-outline-secondary view-toggle-btn"
@@ -38,9 +45,13 @@
 
         <button
             class="btn btn-sm btn-outline-secondary"
-            title="Full screen"
+            title="Expand/Exit full screen"
             data-toggle="full-screen"
-        ><i class="fa fa-expand"></i></button>
+        >
+            <i class="full-page fa fa-up-right-and-down-left-from-center"></i>
+            <i class="full-screen fa fa-expand"></i>
+            <i class="default fa fa-down-left-and-up-right-to-center"></i>
+        </button>
     </div>
 </div>
 <div class="row-fluid">

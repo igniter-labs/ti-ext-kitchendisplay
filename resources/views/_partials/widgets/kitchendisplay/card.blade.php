@@ -24,7 +24,7 @@
                 data-expand-target="#card-items-{{$item->id}}"
             ><i class="fa fa-chevron-down"></i></button>
         </div>
-        <div class="mb-1">
+        <div class="mb-2">
             <div class="d-flex justify-content-between align-items-center gap-2 small text-secondary">
                 @if(!$this->isHiddenCardField('customer_name'))
                     <span class="fw-medium text-body flex-fill">{{ $item->customerName }}</span>
@@ -71,10 +71,10 @@
                 {{ $item->typeName }}
             </div>
         @endif
-        <div id="card-items-{{$item->id}}" class="py-2 border-top" style="display: none;">
+        <div id="card-items-{{$item->id}}" class="py-2" style="display: none;">
             {!! $this->makePartial('kitchendisplay/card-details', ['item' => $item]) !!}
         </div>
-        <div class="d-flex gap-2 align-items-stretch border-top pt-2">
+        <div class="d-flex gap-2 align-items-stretch pt-2">
             {!! $this->makePartial('kitchendisplay/card-actions', ['item' => $item]) !!}
         </div>
     </div>

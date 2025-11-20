@@ -24,8 +24,6 @@ class KitchenDisplay extends BaseWidget
 
     public array $waitTimes = [];
 
-    protected ?Collection $availableStatuses = null;
-
     #[Override]
     public function initialize(): void
     {
@@ -74,24 +72,25 @@ class KitchenDisplay extends BaseWidget
 
     public function getCardStatuses(int $itemStatusId): array
     {
-        $availableStatuses = $this->getAvailableStatuses();
-
-        return $this->model->getVisibleBoardColumns()
-            ->filter(fn(array $boardColumn): bool => array_get($boardColumn, 'code') !== 'on-hold' && ((int)array_get($boardColumn, 'statusId')) !== $itemStatusId)
-            ->mapWithKeys(function(array $boardColumn) use ($availableStatuses): array {
-                $statusId = array_get($boardColumn, 'statusId');
-
-                return [$statusId => $availableStatuses->firstWhere('status_id', $statusId)->status_name ?? ''];
-            })
+        return $this->vars['boardColumns']
+            ->filter(fn(object $boardColumn): bool => $boardColumn->code !== 'on-hold' && ((int)$boardColumn->statusId) !== $itemStatusId)
+            ->pluck('statusName', 'statusId')
             ->filter()
             ->all();
     }
 
     public function getBoardColumnColor(int $itemStatusId): string
     {
-        $status = $this->getAvailableStatuses()->firstWhere('status_id', $itemStatusId);
+        $status = $this->vars['boardColumns']->firstWhere('statusId', $itemStatusId);
 
-        return $status->status_color ?? '#d2d6de';
+        return $status->statusColor ?? '#d2d6de';
+    }
+
+    public function getNextStatusId(int $itemStatusId): int
+    {
+        $boardColumn = $this->vars['boardColumns']->firstWhere('statusId', $itemStatusId);
+
+        return $boardColumn?->nextStatusId ?: 0;
     }
 
     public function onViewToggle(): array
@@ -106,17 +105,17 @@ class KitchenDisplay extends BaseWidget
     public function onUpdateOrderStatus(): array
     {
         $validated = $this->validate(post(), [
-            'itemId' => 'required|integer',
-            'statusId' => 'required|integer',
+            'itemId' => 'required|integer|min:1',
+            'statusId' => 'required|integer|min:1',
         ]);
 
         throw_unless($order = Order::find(array_get($validated, 'itemId')),
-            new FlashException(lang('igniterlabs.kitchendisplay::default.alert_order_not_found'))
+            new FlashException(lang('igniterlabs.kitchendisplay::default.alert_order_not_found')),
         );
 
-        $statusId = array_get($validated, 'statusId') ?: $this->model->getVisibleBoardColumns()->firstWhere('code', 'on-hold')['statusId'] ?? null;
+        $statusId = array_get($validated, 'statusId');
         throw_unless(Status::query()->where('status_id', $statusId)->exists(),
-            new FlashException(lang('igniterlabs.kitchendisplay::default.alert_status_not_found'))
+            new FlashException(lang('igniterlabs.kitchendisplay::default.alert_status_not_found')),
         );
 
         $order->updateOrderStatus($statusId);
@@ -127,13 +126,13 @@ class KitchenDisplay extends BaseWidget
     public function onUpdateWaitTime(): array
     {
         $validated = $this->validate(post(), [
-            'itemId' => 'required|integer',
+            'itemId' => 'required|integer|min:1',
             'minutes' => 'required_if:customTime,null|integer',
-            'customTime' => 'required_if:minutes,null|integer',
+            'customTime' => 'required_if:minutes,null|string',
         ]);
 
         throw_unless($order = Order::find(array_get($validated, 'itemId')),
-            new FlashException(lang('igniterlabs.kitchendisplay::default.alert_order_not_found'))
+            new FlashException(lang('igniterlabs.kitchendisplay::default.alert_order_not_found')),
         );
 
         $currentTime = Carbon::createFromFormat('H:i:s', $order->order_time);
@@ -158,9 +157,32 @@ class KitchenDisplay extends BaseWidget
         ];
     }
 
-    protected function getBoardColumns(): array
+    protected function getBoardColumns(): Collection
     {
-        return $this->model->getVisibleBoardColumns()->map(fn(array $boardColum): stdClass => (object)$boardColum)->all();
+        $availableStatuses = $this->getAvailableStatuses();
+        $allColumns = $this->model->getVisibleBoardColumns();
+        $visibleColumns = $allColumns
+            ->filter(fn(array $column): bool => array_get($column, 'code') !== 'on-hold')
+            ->values();
+
+        return $allColumns->map(function(array $column) use ($availableStatuses, $visibleColumns): stdClass {
+            $statusId = (int)array_get($column, 'statusId', 0);
+            $status = $statusId !== 0 ? $availableStatuses->firstWhere('status_id', $statusId) : null;
+
+            $currentIndex = $statusId !== 0 ? $visibleColumns->search(fn(array $col): bool => (int)array_get($col, 'statusId') === $statusId) : false;
+            $nextStatusId = ($currentIndex !== false && isset($visibleColumns[$currentIndex + 1]))
+                ? (int)array_get($visibleColumns[$currentIndex + 1], 'statusId')
+                : (array_get($column, 'code') === 'on-hold'
+                    ? (int)array_get($visibleColumns->firstWhere('code', 'preparing'), 'statusId', 0)
+                    : (int)array_get($visibleColumns->first(), 'statusId', 0)
+                );
+
+            $column['nextStatusId'] = $nextStatusId;
+            $column['statusName'] = $status->status_name ?? '';
+            $column['statusColor'] = $status->status_color ?? null;
+
+            return (object)$column;
+        });
     }
 
     protected function getBoardItems(): array
@@ -177,15 +199,11 @@ class KitchenDisplay extends BaseWidget
 
     protected function getAvailableStatuses(): Collection
     {
-        if ($this->availableStatuses instanceof Collection) {
-            return $this->availableStatuses;
-        }
-
         $visibleStatusIds = $this->model->getVisibleBoardColumns()->pluck('statusId')->filter()->all();
         if (!$visibleStatusIds) {
-            return [];
+            return collect();
         }
 
-        return $this->availableStatuses = Status::query()->whereIn('status_id', $visibleStatusIds)->get();
+        return Status::query()->whereIn('status_id', $visibleStatusIds)->get();
     }
 }
