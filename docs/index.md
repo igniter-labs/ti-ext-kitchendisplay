@@ -21,11 +21,11 @@ php artisan igniter:up
 
 ## Getting Started
 
-Navigate to **Tools → Kitchen Display** in the admin panel to create and manage displays.
+Navigate to **Tools > Kitchen Display** in the admin panel to create and manage displays.
 
 ### Quick Setup
 
-1. Navigate to **Tools → Kitchen Display**
+1. Navigate to **Tools > Kitchen Display**
 2. Click the **New** button
 3. Enter a title (e.g., "Main Kitchen" or "Pizza Station")
 4. Follow the on-screen configuration options
@@ -34,7 +34,7 @@ Navigate to **Tools → Kitchen Display** in the admin panel to create and manag
 
 ## Configuration
 
-Kitchen displays can be customized via the configuration form under **Tools → Kitchen Display** from the form view. The following settings are available:
+Kitchen displays can be customized via the configuration form under **Tools > Kitchen Display** from the form view. The following settings are available:
 
 **General Settings**
 
@@ -66,13 +66,13 @@ Hide details from order cards: Customer Name, Order ID, Order Type.
 
 ### Viewing Orders
 
-1. Navigate to **Tools → Kitchen Display**
+1. Navigate to **Tools > Kitchen Display**
 2. Click the desired kitchen display from the list
 3. Orders appear in columns based on their status.
 
 ### Updating Status
 
-1. Navigate to **Tools → Kitchen Display**
+1. Navigate to **Tools > Kitchen Display**
 2. Click the desired kitchen display from the list
 3. Click **Next** button, then select a status from the dropdown 
 4. Click **Pause** button to move order to On Hold column
@@ -80,7 +80,7 @@ Hide details from order cards: Customer Name, Order ID, Order Type.
 
 ### Wait Time Management
 
-1. Navigate to **Tools → Kitchen Display**
+1. Navigate to **Tools > Kitchen Display**
 2. Click the desired kitchen display from the list 
 3. Click order time, then select preset increment (+15, +30, +45 mins)
 4. Or select **Custom** to enter a specific time in HH:MM format
