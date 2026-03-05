@@ -7,6 +7,7 @@ return [
     'label_menu_categories' => 'Menu Categories',
     'label_status' => 'Status',
     'label_orders_limit' => 'Orders Limit',
+    'label_poll_interval' => 'Poll Interval (seconds)',
 
     'column_title' => 'Title',
     'column_status' => 'Status',
@@ -72,6 +73,7 @@ return [
     'help_users_assigned_only' => 'When enabled, only orders assigned to the logged in user will be shown except for Admin users',
     'help_users_assigned' => 'Leave empty to display orders assigned to all users',
     'help_orders_limit' => 'Display latest X orders (default is 20, limit to 100)',
+    'help_poll_interval' => 'How often to check for new orders in seconds (default is 5, max 60)',
     'help_hidden_card_fields' => 'Choose which fields to hide from order cards. Leave empty to display all fields.',
     'help_board_columns' => 'Customize the board columns and their associated order statuses.',
 

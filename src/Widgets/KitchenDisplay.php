@@ -54,6 +54,7 @@ class KitchenDisplay extends BaseWidget
         $this->vars['boardItems'] = $this->getBoardItems();
         $this->vars['onHoldStatusId'] = $this->model->getVisibleBoardColumns()->firstWhere('code', 'on-hold')['statusId'] ?? null;
         $this->vars['viewMode'] = $this->getSession('kitchendisplay.viewMode', 'board');
+        $this->vars['pollInterval'] = $this->model->poll_interval ?? 5;
     }
 
     public function getColumnItems(object $boardColumn): array

@@ -119,6 +119,19 @@ return [
                     ],
                     'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
                 ],
+                'poll_interval' => [
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_poll_interval',
+                    'comment' => 'lang:igniterlabs.kitchendisplay::default.help_poll_interval',
+                    'type' => 'number',
+                    'span' => 'left',
+                    'default' => 5,
+                    'attributes' => [
+                        'min' => 1,
+                        'max' => 60,
+                        'step' => 1,
+                    ],
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
+                ],
                 'is_enabled' => [
                     'label' => 'lang:igniterlabs.kitchendisplay::default.label_status',
                     'type' => 'switch',
