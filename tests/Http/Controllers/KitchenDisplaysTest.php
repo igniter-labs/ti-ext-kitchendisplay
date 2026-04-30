@@ -100,6 +100,7 @@ it('creates kitchen display successfully', function(): void {
     $data = [
         'title' => 'Kitchen Display with Columns',
         'orders_limit' => 30,
+        'poll_interval' => 5,
         'is_enabled' => true,
         'board_columns' => $boardColumns,
         'locations' => [],
@@ -137,6 +138,7 @@ it('updates kitchen display successfully', function(): void {
             'KitchenDisplay' => [
                 'title' => 'Updated Title',
                 'orders_limit' => 50,
+                'poll_interval' => 5,
                 'is_enabled' => true,
                 'locations' => [],
                 'order_types' => [],
