@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace IgniterLabs\KitchenDisplay;
 
 use Igniter\System\Classes\BaseExtension;
-use IgniterLabs\KitchenDisplay\Events\KitchenDisplayUpdated;
 use IgniterLabs\KitchenDisplay\Models\KitchenDisplay;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Override;
@@ -46,13 +45,6 @@ class Extension extends BaseExtension
                     ],
                 ],
             ],
-        ];
-    }
-
-    public function registerEventBroadcasts(): array
-    {
-        return [
-            'igniter.cart.orderStatusAdded' => KitchenDisplayUpdated::class,
         ];
     }
 }

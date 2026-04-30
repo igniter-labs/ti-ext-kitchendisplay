@@ -26,6 +26,7 @@ class KitchenDisplayRequest extends FormRequest
             'board_columns.*.isVisible' => lang('igniterlabs.kitchendisplay::default.label_board_column_visible'),
             'board_columns.*.priority' => lang('igniterlabs.kitchendisplay::default.label_board_column_priority'),
             'hidden_card_fields' => lang('igniterlabs.kitchendisplay::default.label_hidden_card_fields'),
+            'poll_interval' => lang('igniterlabs.kitchendisplay::default.label_poll_interval'),
         ];
     }
 
@@ -44,6 +45,7 @@ class KitchenDisplayRequest extends FormRequest
             'board_columns.*.statusId' => ['nullable', 'required_if:board_columns.*.isVisible,1', 'integer'],
             'board_columns.*.isVisible' => ['required', 'boolean'],
             'board_columns.*.priority' => ['required', 'integer'],
+            'poll_interval' => ['required', 'integer', 'min:1', 'max:60'],
             'hidden_card_fields' => ['nullable'],
             'hidden_card_fields.*' => ['string'],
         ];

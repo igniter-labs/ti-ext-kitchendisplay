@@ -1,7 +1,9 @@
 <?php
 
 use Igniter\Admin\Models\Status;
+use Igniter\Cart\Models\Category;
 use Igniter\Cart\Models\Concerns\LocationAction;
+use Igniter\Local\Models\Location;
 
 return [
     'list' => [
@@ -88,7 +90,7 @@ return [
                     'comment' => 'lang:igniterlabs.kitchendisplay::default.help_locations',
                     'type' => 'selectlist',
                     'span' => 'right',
-                    'options' => [\Igniter\Local\Models\Location::class, 'getDropdownOptions'],
+                    'options' => [Location::class, 'getDropdownOptions'],
                     'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
                 ],
                 'order_types' => [
@@ -104,7 +106,7 @@ return [
                     'comment' => 'lang:igniterlabs.kitchendisplay::default.help_menu_categories',
                     'type' => 'selectlist',
                     'span' => 'left',
-                    'options' => [\Igniter\Cart\Models\Category::class, 'getDropdownOptions'],
+                    'options' => [Category::class, 'getDropdownOptions'],
                     'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
                 ],
                 'orders_limit' => [
@@ -115,6 +117,19 @@ return [
                     'default' => 20,
                     'attributes' => [
                         'min' => 1,
+                        'step' => 1,
+                    ],
+                    'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
+                ],
+                'poll_interval' => [
+                    'label' => 'lang:igniterlabs.kitchendisplay::default.label_poll_interval',
+                    'comment' => 'lang:igniterlabs.kitchendisplay::default.help_poll_interval',
+                    'type' => 'number',
+                    'span' => 'left',
+                    'default' => 5,
+                    'attributes' => [
+                        'min' => 1,
+                        'max' => 60,
                         'step' => 1,
                     ],
                     'tab' => 'lang:igniterlabs.kitchendisplay::default.tab_general',
