@@ -210,7 +210,7 @@
                 if (currentView === 'board') {
                     $container.find('[data-control="kitchen-display-board"]').scrollLeft(scrollLeft);
                     $container.find('[data-control="kitchen-display-board"] .order-list').each(function (i) {
-                        if (columnScrollTops[i]) $(this).scrollTop(columnScrollTops[i]);
+                        if (columnScrollTops[i] !== undefined) $(this).scrollTop(columnScrollTops[i]);
                     });
                 } else {
                     $container.find('[data-control="kitchen-display-list"]').scrollTop(listScrollTop);
