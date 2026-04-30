@@ -32,16 +32,64 @@
         this.$el.on('click', '[data-control="item-status"]', $.proxy(this.onStatusUpdateClick, this));
         this.$el.on('click', '[data-toggle="card-expand"]', $.proxy(this.onExpandCardClick, this));
 
-        if (typeof Broadcast === 'undefined') {
-            console.warn('Broadcast is not available. Kitchen display real-time updates are disabled.');
-            return;
-        }
+        this.isRefreshing = false;
+        this.pollIntervalId = null;
 
-        let $this = this;
-        Broadcast.channel('igniterlabs.kitchendisplay')
-            .listen('.kitchendisplay.updated', (e) => {
-                $this.refreshItemsWithScrollRestore();
-            })
+        var pollSeconds = parseInt(this.$el.data('pollInterval'), 10);
+        if (isNaN(pollSeconds)) {
+            pollSeconds = 5;
+        }
+        pollSeconds = Math.max(1, Math.min(60, pollSeconds));
+        this.pollMs = pollSeconds * 1000;
+
+        var self = this;
+        this._visibilityHandler = function () {
+            if (document.hidden) {
+                self.stopPolling();
+            } else {
+                if (!self.isRefreshing) {
+                    self.isRefreshing = true;
+                    self.refreshItemsWithScrollRestore(function () {
+                        self.isRefreshing = false;
+                    });
+                }
+                self.startPolling();
+            }
+        };
+
+        document.addEventListener('visibilitychange', this._visibilityHandler);
+        this.startPolling();
+
+        $(window).on('beforeunload.kitchenDisplay', function () {
+            self.dispose();
+        });
+    }
+
+    KitchenDisplay.prototype.startPolling = function () {
+        if (this.pollIntervalId) return;
+
+        var self = this;
+        this.pollIntervalId = setInterval(function () {
+            if (self.isRefreshing) return;
+
+            self.isRefreshing = true;
+            self.refreshItemsWithScrollRestore(function () {
+                self.isRefreshing = false;
+            });
+        }, this.pollMs);
+    }
+
+    KitchenDisplay.prototype.stopPolling = function () {
+        if (this.pollIntervalId) {
+            clearInterval(this.pollIntervalId);
+            this.pollIntervalId = null;
+        }
+    }
+
+    KitchenDisplay.prototype.dispose = function () {
+        this.stopPolling();
+        document.removeEventListener('visibilitychange', this._visibilityHandler);
+        $(window).off('beforeunload.kitchenDisplay');
     }
 
     KitchenDisplay.prototype.initDropdownHandlers = function () {
@@ -127,12 +175,17 @@
     }
 
     KitchenDisplay.prototype.onRefreshButtonClick = function (event) {
+        if (this.isRefreshing) return;
+
         let $btn = $(event.currentTarget);
 
         $btn.prop('disabled', true).addClass('disabled');
         $btn.find('i').addClass('fa-spin');
 
+        var self = this;
+        this.isRefreshing = true;
         this.refreshItemsWithScrollRestore(function () {
+            self.isRefreshing = false;
             $btn.prop('disabled', false).removeClass('disabled');
             $btn.find('i').removeClass('fa-spin');
         });
@@ -148,16 +201,31 @@
         let $container = this.$el;
         let currentView = $container.find('[data-view-container="board"]').hasClass('d-none') ? 'list' : 'board';
 
-        $.request('onRefreshOrders').done(function () {
-            // Restore scroll positions after content is rendered
-            $(window).scrollTop(scrollTop);
-            if (currentView === 'board') {
-                $container.find('[data-control="kitchen-display-board"]').scrollLeft(scrollLeft);
-            } else {
-                $container.find('[data-control="kitchen-display-list"]').scrollTop(listScrollTop);
-            }
+        // Save scroll positions of individual column order lists
+        let columnScrollTops = [];
+        $board.find('.order-list').each(function (i) {
+            columnScrollTops[i] = $(this).scrollTop();
+        });
+
+        try {
+            $.request('onRefreshOrders').done(function () {
+                // Restore scroll positions after content is rendered
+                $(window).scrollTop(scrollTop);
+                if (currentView === 'board') {
+                    $container.find('[data-control="kitchen-display-board"]').scrollLeft(scrollLeft);
+                    $container.find('[data-control="kitchen-display-board"] .order-list').each(function (i) {
+                        if (columnScrollTops[i] !== undefined) $(this).scrollTop(columnScrollTops[i]);
+                    });
+                } else {
+                    $container.find('[data-control="kitchen-display-list"]').scrollTop(listScrollTop);
+                }
+                if (callback) callback();
+            }).fail(function () {
+                if (callback) callback();
+            });
+        } catch (e) {
             if (callback) callback();
-        })
+        }
     };
 
     var old = $.fn.kitchenDisplay;

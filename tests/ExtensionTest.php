@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace IgniterLabs\KitchenDisplay\Tests;
 
-use IgniterLabs\KitchenDisplay\Events\KitchenDisplayUpdated;
 use IgniterLabs\KitchenDisplay\Extension;
 
 it('registers permissions correctly', function(): void {
@@ -40,12 +39,3 @@ it('registers navigation correctly', function(): void {
         ->and($navigation['tools']['child']['kitchendisplay']['permission'])->toBe('IgniterLabs.KitchenDisplay.Manage');
 });
 
-it('registers event broadcasts correctly', function(): void {
-    $extension = new Extension(app());
-
-    $broadcasts = $extension->registerEventBroadcasts();
-
-    expect($broadcasts)->toBeArray()
-        ->and($broadcasts)->toHaveKey('igniter.cart.orderStatusAdded')
-        ->and($broadcasts['igniter.cart.orderStatusAdded'])->toBe(KitchenDisplayUpdated::class);
-});
