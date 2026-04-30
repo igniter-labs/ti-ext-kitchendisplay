@@ -35,7 +35,11 @@
         this.isRefreshing = false;
         this.pollIntervalId = null;
 
-        var pollSeconds = parseInt(this.$el.data('pollInterval'), 10) || 5;
+        var pollSeconds = parseInt(this.$el.data('pollInterval'), 10);
+        if (isNaN(pollSeconds)) {
+            pollSeconds = 5;
+        }
+        pollSeconds = Math.max(1, Math.min(60, pollSeconds));
         this.pollMs = pollSeconds * 1000;
 
         var self = this;

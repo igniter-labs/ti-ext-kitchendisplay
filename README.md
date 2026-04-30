@@ -28,7 +28,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 ## Reporting Issues
 
-If you encounter a bug in this extension, please report it using the [Issue Tracker](https://github.com/igniter-labs/ti-ext-kitchendisplay/issues) on GitHub.
+If you encounter a bug in this extension, please report it using the [Issue Tracker](https://github.com/tastyigniter/TastyIgniter/issues) on GitHub.
 
 ## Contributing
 

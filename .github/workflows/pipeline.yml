@@ -1,4 +1,4 @@
-name: Reports CI Pipeline
+name: Kitchen Display CI Pipeline
 
 on: [ push, workflow_dispatch ]
 
